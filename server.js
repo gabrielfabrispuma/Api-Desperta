@@ -1,3 +1,5 @@
+// Alterações no server.js
+
 const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
@@ -9,8 +11,10 @@ app.use(cors());
 app.use(express.json());
 
 const dataFile = "config.json";
+
 const statusFile = "status.json"; // Arquivo para persistir o status dos ESP32
 const smtpConfigFile = "smtp_config.json"; // Arquivo para configurações SMTP
+
 
 // Dados padrão para a configuração
 const defaultConfig = {
@@ -29,6 +33,7 @@ const defaultSmtpConfig = {
     authorEmail: "ti@fabrispuma.com.br",
     authorPassword: "teste"
 };
+
 
 // Carrega os dados do arquivo de configuração ou usa os padrões
 function loadConfig() {
@@ -94,7 +99,7 @@ app.post("/heartbeat", (req, res) => {
     res.sendStatus(200);
 });
 
-// Rota para obter os dados de configuração e status do ESP32
+// Rota para obter os dados de configuração, status do ESP32 e configuração SMTP
 app.get("/config", (req, res) => {
     const config = loadConfig();
     const status = loadStatus();  // Carrega o status dos ESP32s
@@ -108,6 +113,7 @@ app.get("/config", (req, res) => {
         ...config,
         esp32Status: esp32Status,  // Adiciona o status do ESP32 à resposta
         smtpConfig: smtpConfig // Adiciona a configuração SMTP à resposta
+
     };
     res.json(response);
 });
@@ -127,10 +133,12 @@ app.get("/smtp-config", (req, res) => {
 
 // Rota para atualizar a configuração SMTP
 app.post("/smtp-config", (req, res) => {
+
     const newSmtpConfig = req.body;
     saveSmtpConfig(newSmtpConfig);
     res.json({ message: "Configuração SMTP atualizada!", data: newSmtpConfig });
 });
+
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando na porta ${PORT}`);
