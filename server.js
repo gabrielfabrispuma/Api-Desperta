@@ -18,11 +18,11 @@ const smtpConfigFile = "smtp_config.json"; // Arquivo para configurações SMTP
 
 // Dados padrão para a configuração
 const defaultConfig = {
-    startHour: 7,
+    startHour: 22,
     startMinute: 0,
-    endHour: 17,
-    endMinute: 30,
-    interval: 15,
+    endHour: 5,
+    endMinute: 0,
+    interval: 20,
     email1: "gabrielmarcal95@hotmail.com"
 };
 
